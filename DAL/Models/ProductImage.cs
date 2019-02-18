@@ -4,10 +4,12 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public class Option
+    public class ProductImage
     {
         public int Id { get; private set; }
         public int ProductId { get; private set; }
-        public string Name { get; private set; }
+        public string ImageUrl { get; private set; }
+
+        private ProductImage() { }
     }
 }

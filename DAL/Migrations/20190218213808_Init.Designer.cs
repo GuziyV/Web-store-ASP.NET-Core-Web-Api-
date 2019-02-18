@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20190217203518_Init")]
+    [Migration("20190218213808_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DAL.Models.Customer", b =>
@@ -119,8 +119,6 @@ namespace DAL.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("ImageUrl");
-
                     b.Property<string>("Name");
 
                     b.Property<int>("NumberOfItems");
@@ -136,6 +134,23 @@ namespace DAL.Migrations
                     b.HasIndex("ProducerId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("DAL.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<int>("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImage");
                 });
 
             modelBuilder.Entity("DAL.Models.ProductOrder", b =>
@@ -177,6 +192,14 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Producer")
                         .WithMany("Products")
                         .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Models.ProductImage", b =>
+                {
+                    b.HasOne("DAL.Models.Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

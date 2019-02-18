@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DAL.Models
 {
     public class Product
     {
-        public int Id { get; set; }
-        public int CategoryId { get; set; }
-        public int ProducerId { get; set; }
-        public List<ProductOrder> ProductOrders { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double Price { get; set; }
-        public string ImageUrl { get; set; }
-        public int NumberOfItems { get; set; }
-        public List<Option> Options { get; set; }
+        public int Id { get; private set; }
+        public int CategoryId { get; private set; }
+        public int ProducerId { get; private set; }
+        private HashSet<ProductOrder> productOrders;
+        public IEnumerable<ProductOrder> ProductOrders => productOrders?.ToList();
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public double Price { get; private set; }
+        private HashSet<ProductImage> productImages;
+        public IEnumerable<ProductImage> ProductImages => productImages?.ToList();
+        public int NumberOfItems { get; private set; }
+        private HashSet<Option> options;
+        public IEnumerable<Option> Options => options?.ToList();
+
+        private Product() { }
     }
 }

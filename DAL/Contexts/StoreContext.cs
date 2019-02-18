@@ -9,7 +9,7 @@ namespace DAL.Contexts
 {
     public class StoreContext : DbContext
     {
-        public DbSet<Category> Blogs { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Producer> Producers { get; set; }
@@ -30,6 +30,27 @@ namespace DAL.Contexts
                 .HasOne(po => po.Order)
                 .WithMany(p => p.ProductOrders)
                 .HasForeignKey(p => p.OrderId);
+            modelBuilder.Entity<Category>().Metadata
+                .FindNavigation(nameof(Category.Products))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Customer>().Metadata
+                .FindNavigation(nameof(Customer.Orders))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Order>().Metadata
+                .FindNavigation(nameof(Order.ProductOrders))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Producer>().Metadata
+                .FindNavigation(nameof(Producer.Products))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Product>().Metadata
+                .FindNavigation(nameof(Product.ProductOrders))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Product>().Metadata
+                .FindNavigation(nameof(Product.Options))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Product>().Metadata
+                .FindNavigation(nameof(Product.ProductImages))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
