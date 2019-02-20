@@ -100,7 +100,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("Name");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -117,7 +117,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Model");
 
                     b.Property<int>("NumberOfItems");
 

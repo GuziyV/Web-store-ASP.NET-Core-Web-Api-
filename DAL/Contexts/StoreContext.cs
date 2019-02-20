@@ -20,6 +20,7 @@ namespace DAL.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Keys
             modelBuilder.Entity<ProductOrder>()
                 .HasKey(po => new { po.OrderId, po.ProductId });
             modelBuilder.Entity<ProductOrder>()
@@ -30,6 +31,9 @@ namespace DAL.Contexts
                 .HasOne(po => po.Order)
                 .WithMany(p => p.ProductOrders)
                 .HasForeignKey(p => p.OrderId);
+            #endregion
+
+            #region DDDFields
             modelBuilder.Entity<Category>().Metadata
                 .FindNavigation(nameof(Category.Products))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
@@ -51,6 +55,7 @@ namespace DAL.Contexts
             modelBuilder.Entity<Product>().Metadata
                 .FindNavigation(nameof(Product.ProductImages))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+            #endregion
         }
     }
 }
