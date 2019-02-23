@@ -1,4 +1,6 @@
-﻿namespace DAL.Models
+﻿using DAL.Interfaces;
+
+namespace DAL.Models
 {
     public class ProductOrder
     {

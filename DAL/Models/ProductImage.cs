@@ -1,15 +1,16 @@
-﻿using System;
+﻿using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DAL.Models
 {
-    public class ProductImage
+    public class ProductImage : IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private set; }
-        public int ProductId { get; private set; }
+        public Product Product { get; private set; }
         public string ImageUrl { get; private set; }
 
         private ProductImage() { }
@@ -17,7 +18,7 @@ namespace DAL.Models
         public ProductImage(Product product, string imageUrl)
         {
             this.ImageUrl = imageUrl;
-            this.ProductId = product.Id;
+            this.Product = product;
         }
     }
 }

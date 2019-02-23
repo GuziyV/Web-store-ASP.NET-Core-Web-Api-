@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public class Customer
+    public class User : IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private set; }
@@ -18,6 +19,6 @@ namespace DAL.Models
         public string IP { get; private set; }
         public Role Role { get; private set; }
 
-        private Customer() { }
+        private User() { }
     }
 }

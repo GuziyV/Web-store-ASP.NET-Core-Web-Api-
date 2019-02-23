@@ -37,7 +37,7 @@ namespace DAL.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("DAL.Models.Customer", b =>
+            modelBuilder.Entity("DAL.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DAL.Models.Option", b =>
@@ -83,13 +83,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<int>("CustomerId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("PaymentType");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -176,9 +176,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Order", b =>
                 {
-                    b.HasOne("DAL.Models.Customer")
+                    b.HasOne("DAL.Models.User")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

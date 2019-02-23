@@ -11,7 +11,7 @@ namespace DAL.Contexts
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Producer> Producers { get; set; }
         public DbSet<Product> Products { get; set; }
 
@@ -37,8 +37,8 @@ namespace DAL.Contexts
             modelBuilder.Entity<Category>().Metadata
                 .FindNavigation(nameof(Category.Products))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
-            modelBuilder.Entity<Customer>().Metadata
-                .FindNavigation(nameof(Customer.Orders))
+            modelBuilder.Entity<User>().Metadata
+                .FindNavigation(nameof(User.Orders))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
             modelBuilder.Entity<Order>().Metadata
                 .FindNavigation(nameof(Order.ProductOrders))
