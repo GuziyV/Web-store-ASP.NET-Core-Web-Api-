@@ -4,6 +4,7 @@ using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,24 @@ namespace BL.Services
             product.Price = price;
             await context.SaveChangesAsync();
             return true;
+        }
+
+        public override async Task<ProductDTO> PostAsync(ProductDTO entity)
+        {
+            var resEntity = context != null ?
+                (await context.AddAsync<Product>(mapper.Map<ProductDTO, Product>(entity, opt =>
+                {
+                    opt.AfterMap(async (src, dest) =>
+                    {
+                        dest.SetCategory(await context.Set<Category>().Where(p => p.Name == src.CategoryName)
+                            .FirstOrDefaultAsync());
+                        dest.SetProducer(await context.Set<Producer>().Where(p => p.Name == src.ProducerName)
+                            .FirstOrDefaultAsync());
+                    });
+                }))).Entity :
+                null;
+            await context.SaveChangesAsync();
+            return mapper.Map<ProductDTO>(resEntity);
         }
     }
 }

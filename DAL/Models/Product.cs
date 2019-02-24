@@ -35,20 +35,8 @@ namespace DAL.Models
             }
 
             this.Model = model;
-
-            if(producer == null)
-            {
-                throw new ArgumentException("Producer can not be null");
-            }
-
-            this.Producer = producer;
-
-            if(category == null)
-            {
-                throw new ArgumentException("Producer can not be null");
-            }
-
-            this.Category = category;
+            this.Producer = producer ?? throw new ArgumentException("Producer can not be null");
+            this.Category = category ?? throw new ArgumentException("Category can not be null");
 
             this.Description = description;
 
@@ -113,6 +101,16 @@ namespace DAL.Models
         public void SetPrice(double newPrice)
         {
             this.Price = newPrice;
+        }
+
+        public void SetCategory(Category category)
+        {
+            this.Category = category ?? throw new ArgumentException(nameof(category));
+        }
+
+        public void SetProducer(Producer producer)
+        {
+            this.Producer = producer ?? throw new ArgumentNullException(nameof(producer));
         }
     }
 }
