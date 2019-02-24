@@ -35,11 +35,43 @@ namespace BL.Services
                             .FirstOrDefaultAsync());
                         dest.SetProducer(await context.Set<Producer>().Where(p => p.Name == src.ProducerName)
                             .FirstOrDefaultAsync());
+
+                        await context.SaveChangesAsync();
+
+                        foreach (var option in src.Options)
+                        {
+                            dest.AddOption(option.Name, context);
+                        }
+
+                        foreach (var image in src.ProductImages)
+                        {
+                            dest.AddProductImage(image.ImageUrl, context);
+                        }
                     });
                 }))).Entity :
                 null;
             await context.SaveChangesAsync();
             return mapper.Map<ProductDTO>(resEntity);
+        }
+
+        public async override Task<List<ProductDTO>> GetAllAsync()
+        {
+            return context != null ?
+                mapper.Map<List<ProductDTO>>(await context.Set<Product>()
+                .Include(p => p.Category)
+                .Include(p => p.Producer)
+                .ToListAsync()) :
+                null;
+        }
+
+        public async Task<bool> TrySetOptions(int productId, IEnumerable<OptionDTO> options)
+        {
+            foreach(var option in options)
+            {
+                mapper.Map<Product>(await this.GetOneAsync(productId)).AddOption(option.Name, context);
+            }
+            await context.SaveChangesAsync();
+            return true;
         }
     }
 }
