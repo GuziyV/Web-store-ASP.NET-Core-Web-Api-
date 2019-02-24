@@ -35,21 +35,14 @@ namespace BL.Services
                             .FirstOrDefaultAsync());
                         dest.SetProducer(await context.Set<Producer>().Where(p => p.Name == src.ProducerName)
                             .FirstOrDefaultAsync());
-
-                        await context.SaveChangesAsync();
-
-                        foreach (var option in src.Options)
-                        {
-                            dest.AddOption(option.Name, context);
-                        }
-
-                        foreach (var image in src.ProductImages)
-                        {
-                            dest.AddProductImage(image.ImageUrl, context);
-                        }
                     });
                 }))).Entity :
                 null;
+
+            foreach (var option in mapper.Map<IEnumerable<OptionDTO>, IEnumerable<Option>>(entity.Options))
+            {
+                resEntity.AddOption(option.Name, context);
+            }
             await context.SaveChangesAsync();
             return mapper.Map<ProductDTO>(resEntity);
         }
@@ -72,6 +65,15 @@ namespace BL.Services
             }
             await context.SaveChangesAsync();
             return true;
+        }
+       
+        public async override Task<ProductDTO> GetOneAsync(int identifier)
+        {
+            return context != null ?
+                mapper.Map<ProductDTO>((await context.Set<Product>()
+                .Include(p => p.Options)
+                .FirstAsync(p => p.Id == identifier))) :
+                null;
         }
     }
 }
