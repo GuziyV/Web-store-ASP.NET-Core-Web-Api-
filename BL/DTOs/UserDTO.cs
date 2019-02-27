@@ -13,5 +13,6 @@ namespace BL.DTOs
         public string Telephone { get; set; }
         public string IP { get; set; }
         public Role Role { get; set; }
+        public string Password { get; set; }
     }
 }

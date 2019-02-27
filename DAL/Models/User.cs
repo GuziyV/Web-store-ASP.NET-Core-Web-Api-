@@ -18,6 +18,7 @@ namespace DAL.Models
         public string Telephone { get; private set; }
         public string IP { get; private set; }
         public Role Role { get; private set; }
+        public byte[] PasswordHash { get; set; }
 
         private User() { }
     }

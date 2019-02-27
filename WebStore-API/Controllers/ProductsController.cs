@@ -11,9 +11,9 @@ namespace WebStore_API.Controllers
     public class ProductsController : ControllerBase
     {
         ProductService productService;
-        public ProductsController(ProductService productCUD)
+        public ProductsController(ProductService productService)
         {
-            this.productService = productCUD;
+            this.productService = productService;
         }
 
         //api/Products

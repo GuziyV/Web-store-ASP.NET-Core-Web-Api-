@@ -84,7 +84,7 @@ namespace BL.Mapping
                    .ForMember(c => c.NumberOfItems, c => c.MapFrom(cd => cd.NumberOfItems))
                    .ForMember(c => c.ProductImages, c => c.MapFrom(cd => cd.ProductImages))
                    .ForMember(c => c.Options, c => c.MapFrom(cd => cd.Options))
-                   .ForMember(c => c.Discount, c => c.Ignore());
+                   .ForMember(c => c.Discount, c => c.MapFrom(cd => cd.Discount));
 
                 cfg.CreateMap<ProductImage, ProductImageDTO>()
                    .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
