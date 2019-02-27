@@ -71,7 +71,8 @@ namespace BL.Mapping
                    .ForMember(c => c.CategoryName, c => c.MapFrom(cd => cd.Category.Name))
                    .ForMember(c => c.NumberOfItems, c => c.MapFrom(cd => cd.NumberOfItems))
                    .ForMember(c => c.ProductImages, c => c.MapFrom(cd => cd.ProductImages))
-                   .ForMember(c => c.Options, c => c.MapFrom(cd => cd.Options));
+                   .ForMember(c => c.Options, c => c.MapFrom(cd => cd.Options))
+                   .ForMember(c => c.PriceWithDiscount, c => c.MapFrom(cd => cd.Price - (cd.Price * cd.Discount) / 100));
 
                 cfg.CreateMap<ProductDTO, Product>()
                    .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
@@ -82,7 +83,8 @@ namespace BL.Mapping
                    .ForMember(c => c.Category, c => c.Ignore())
                    .ForMember(c => c.NumberOfItems, c => c.MapFrom(cd => cd.NumberOfItems))
                    .ForMember(c => c.ProductImages, c => c.MapFrom(cd => cd.ProductImages))
-                   .ForMember(c => c.Options, c => c.MapFrom(cd => cd.Options));
+                   .ForMember(c => c.Options, c => c.MapFrom(cd => cd.Options))
+                   .ForMember(c => c.Discount, c => c.Ignore());
 
                 cfg.CreateMap<ProductImage, ProductImageDTO>()
                    .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))

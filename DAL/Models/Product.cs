@@ -19,6 +19,7 @@ namespace DAL.Models
         public string Model { get; private set; }
         public string Description { get; private set; }
         public double Price { get; private set; }
+        public double Discount { get; set; } = 0;
         private HashSet<ProductImage> productImages;
         public IEnumerable<ProductImage> ProductImages => productImages?.ToList();
         public int NumberOfItems { get; private set; }
@@ -111,6 +112,15 @@ namespace DAL.Models
         public void SetProducer(Producer producer)
         {
             this.Producer = producer ?? throw new ArgumentNullException(nameof(producer));
+        }
+
+        public void SetDiscount(double percent)
+        {
+            if(percent > 100 || percent < 0)
+            {
+                throw new ArgumentException(nameof(percent), "Discount value not correct");
+            }
+            this.Discount = percent;
         }
     }
 }

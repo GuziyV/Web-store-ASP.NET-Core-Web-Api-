@@ -14,5 +14,6 @@ namespace BL.DTOs
         public IEnumerable<ProductImageDTO> ProductImages;
         public int NumberOfItems { get; set; }
         public IEnumerable<OptionDTO> Options { get; set; }
+        public double PriceWithDiscount { get; set; }
     }
 }
