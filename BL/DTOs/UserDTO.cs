@@ -7,7 +7,7 @@ namespace BL.DTOs
     public class UserDTO
     {
         public int Id { get; set; }
-        public IEnumerable<OrderDTO> Orders;
+        public IEnumerable<OrderDTO> Orders { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }

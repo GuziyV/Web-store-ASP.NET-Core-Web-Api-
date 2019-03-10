@@ -31,7 +31,7 @@ namespace WebStore_API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<StoreContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("StoreDB"));
+                options.UseSqlServer(Configuration.GetConnectionString("StoreDB"), b => b.MigrationsAssembly("DAL"));
             });
             services.AddCors();
             services.AddScoped<ProductService>();
@@ -39,20 +39,6 @@ namespace WebStore_API
             services.AddScoped<DbContext, StoreContext>();
             services.AddScoped<StoreContext>();
             services.AddScoped<IMapper>(sp => BL.Mapping.AutoMapper.GetDefaultMapper());
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration.GetValue<string>("JwtIssuer"),
-                        ValidAudience = Configuration.GetValue<string>("JwtAudience"),
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JwtSecretKey")))
-                    };
-                });
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -93,7 +79,14 @@ namespace WebStore_API
                     ValidateAudience = false
                 };
             });
-        }
+			// Cors
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+	            builder.AllowAnyOrigin()
+		            .AllowAnyMethod()
+		            .AllowAnyHeader();
+            }));
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -113,6 +106,7 @@ namespace WebStore_API
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
+            app.UseCors("MyPolicy");
+		}
     }
 }

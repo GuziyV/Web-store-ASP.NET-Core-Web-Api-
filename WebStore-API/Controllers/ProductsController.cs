@@ -24,7 +24,7 @@ namespace WebStore_API.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ProductDTO> Get(int id)
         {
             return await productService.GetOneAsync(id);

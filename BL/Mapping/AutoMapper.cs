@@ -27,7 +27,25 @@ namespace BL.Mapping
                     .ForMember(c => c.Products, c => c.MapFrom(cd => cd.Products))
                     .ForMember(c => c.Description, c => c.MapFrom(cd => cd.Description));
 
-                cfg.CreateMap<Option, OptionDTO>()
+                cfg.CreateMap<UserDTO, User>()
+	                .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
+	                .ForMember(c => c.Login, c => c.MapFrom(cd => cd.Login))
+	                .ForMember(c => c.Email, c => c.MapFrom(cd => cd.Email))
+	                .ForMember(c => c.Telephone, c => c.MapFrom(cd => cd.Telephone))
+	                .ForMember(c => c.IP, c => c.MapFrom(cd => cd.IP))
+	                .ForMember(c => c.Role, c => c.MapFrom(cd => cd.Role))
+					.ForMember(c => c.Orders, c => c.MapFrom(cd => cd.Orders))
+					.ForMember(c => c.PasswordHash, c => c.Ignore());
+				cfg.CreateMap<User, UserDTO>()
+					.ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
+					.ForMember(c => c.Login, c => c.MapFrom(cd => cd.Login))
+					.ForMember(c => c.Email, c => c.MapFrom(cd => cd.Email))
+					.ForMember(c => c.Telephone, c => c.MapFrom(cd => cd.Telephone))
+					.ForMember(c => c.IP, c => c.MapFrom(cd => cd.IP))
+					.ForMember(c => c.Orders, c => c.MapFrom(cd => cd.Orders))
+					.ForMember(c => c.Password, c => c.Ignore());
+
+				cfg.CreateMap<Option, OptionDTO>()
                     .ForMember(c => c.Name, c => c.MapFrom(cd => cd.Name))
                     .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id));
                 cfg.CreateMap<OptionDTO, Option>()
