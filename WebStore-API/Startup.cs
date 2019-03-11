@@ -82,9 +82,10 @@ namespace WebStore_API
 			// Cors
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-	            builder.AllowAnyOrigin()
-		            .AllowAnyMethod()
-		            .AllowAnyHeader();
+	            builder.WithOrigins("http://localhost:8080")
+					.AllowAnyMethod()
+		            .AllowAnyHeader()
+		            .AllowCredentials();
             }));
 		}
 
@@ -105,8 +106,8 @@ namespace WebStore_API
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseCors("MyPolicy");
+			app.UseMvc();
 		}
     }
 }
