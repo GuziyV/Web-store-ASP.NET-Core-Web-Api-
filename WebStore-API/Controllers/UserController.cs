@@ -51,7 +51,7 @@ namespace WebStore_API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return new JsonResult(new { user = authUser, token });
+            return new JsonResult(new { user = authUser, tokenString });
         }
 
         [AllowAnonymous]

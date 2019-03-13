@@ -18,8 +18,14 @@ namespace DAL.Models
         public string Telephone { get; private set; }
         public string IP { get; private set; }
         public Role Role { get; private set; }
-        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordHash { get; private set; }
+        public byte[] PasswordSalt { get; private set; }
 
-        private User() { }
+		private User() { }
+
+		public void SetPassword(byte[] passwordHash, byte[] passwordSalt) {
+			this.PasswordHash = passwordHash;
+			this.PasswordSalt = passwordSalt;
+		}
     }
 }
