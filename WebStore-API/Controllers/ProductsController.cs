@@ -2,13 +2,16 @@
 using System.Threading.Tasks;
 using BL.DTOs;
 using BL.Services;
+using DAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebStore_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    [Authorize(Roles = Role.Admin)]
+	public class ProductsController : ControllerBase
     {
         ProductService productService;
         public ProductsController(ProductService productService)
