@@ -17,12 +17,12 @@ namespace BL.Services {
 			this.context = context;
 		}
 
-		public async Task<ProducerDTO> AddProduct(ProductDTO product) {
+		public async Task<ProductDTO> AddProduct(ProductDTO product) {
 			var resEntity = context != null ?
-				(await context.AddAsync<Producer>(mapper.Map<Producer>(product))).Entity :
+				(await context.AddAsync<Product>(mapper.Map<Product>(product))).Entity :
 				null;
 			await context.SaveChangesAsync();
-			return mapper.Map<ProducerDTO>(resEntity);
+			return mapper.Map<ProductDTO>(resEntity);
 		}
 	}
 }

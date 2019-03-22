@@ -13,7 +13,6 @@ namespace WebStore_API.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Role.Admin)]
-
 	public class AdminController : ControllerBase {
 	    private AdminService adminService;
 
@@ -22,7 +21,7 @@ namespace WebStore_API.Controllers {
 	    }
         // POST: api/Admin
         [HttpPost("addProduct")]
-        public async Task<ProducerDTO> Post([FromBody] ProductDTO product) {
+        public async Task<ProductDTO> Post([FromBody] ProductDTO product) {
 	        return await adminService.AddProduct(product: product);
         }
     }
