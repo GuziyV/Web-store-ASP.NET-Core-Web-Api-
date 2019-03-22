@@ -4,13 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using BL.DTOs;
 using BL.Services;
+using DAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebStore_API.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase {
+    [Authorize(Roles = Role.Admin)]
+
+	public class AdminController : ControllerBase {
 	    private AdminService adminService;
 
 	    public AdminController(AdminService adminService) {

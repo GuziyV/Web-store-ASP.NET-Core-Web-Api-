@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BL.DTOs;
 using BL.Helpers;
 using BL.Services;
+using DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,8 +43,8 @@ namespace WebStore_API.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role.ToString())
+                    new Claim(ClaimTypes.Name, authUser.Id.ToString()),
+                    new Claim(ClaimTypes.Role, authUser.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
@@ -56,8 +57,8 @@ namespace WebStore_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<UserDTO> Register([FromBody]UserDTO user)
-        {
+        public async Task<UserDTO> Register([FromBody]UserDTO user) {
+	        user.Role = Role.User;
             return await userService.PostAsync(user);
         }
 

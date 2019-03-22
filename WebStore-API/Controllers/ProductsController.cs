@@ -10,7 +10,7 @@ namespace WebStore_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = Role.Admin)]
+    [Authorize(Roles = "User, Admin")]
 	public class ProductsController : ControllerBase
     {
         ProductService productService;

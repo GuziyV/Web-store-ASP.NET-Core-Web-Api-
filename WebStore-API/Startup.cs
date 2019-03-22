@@ -105,7 +105,8 @@ namespace WebStore_API
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+			app.UseHttpsRedirection();
             app.UseCors("MyPolicy");
 			app.UseMvc();
 		}
