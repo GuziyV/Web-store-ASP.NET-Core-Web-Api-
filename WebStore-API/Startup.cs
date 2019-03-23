@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebStore_API
 {
@@ -33,7 +34,8 @@ namespace WebStore_API
             {
                 options.UseSqlServer(Configuration.GetConnectionString("StoreDB"), b => b.MigrationsAssembly("DAL"));
             });
-            services.AddCors();
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>();
+			services.AddCors();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
             services.AddScoped<DbContext, StoreContext>();
@@ -54,21 +56,6 @@ namespace WebStore_API
             })
             .AddJwtBearer(x =>
             {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<UserService>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetOneAsync(userId);
-                        if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters

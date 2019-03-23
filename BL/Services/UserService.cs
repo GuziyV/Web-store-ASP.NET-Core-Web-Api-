@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
 namespace BL.Services
 {
@@ -40,6 +41,7 @@ namespace BL.Services
             byte[] passwordHash, passwordSalt;
 			CreatePasswordHash(entity.Password, passwordHash:out passwordHash, passwordSalt: out passwordSalt);
 			user.SetPassword(passwordHash, passwordSalt);
+			user.SetRole(Role.User);
             context.Add(user);
             await context.SaveChangesAsync();
             return mapper.Map<User, UserDTO>(user);

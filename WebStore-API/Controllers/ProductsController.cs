@@ -35,28 +35,32 @@ namespace WebStore_API.Controllers
 
         // POST: api/Products
         [HttpPost]
-        public async Task<ProductDTO> Post([FromBody] ProductDTO product)
+        [Authorize(Roles = Role.Admin)]
+		public async Task<ProductDTO> Post([FromBody] ProductDTO product)
         {
             return await productService.PostAsync(product);
         }
 
         // PUT: api/Products/5
         [HttpPost("{id}")]
-        public async Task<bool> SetOption(int id, [FromBody] IEnumerable<OptionDTO> options)
+        [Authorize(Roles = Role.Admin)]
+		public async Task<bool> SetOption(int id, [FromBody] IEnumerable<OptionDTO> options)
         {
             return await productService.TrySetOptions(id, options);
         }
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<bool> Put(int id, [FromBody] double price)
+        [Authorize(Roles = Role.Admin)]
+		public async Task<bool> Put(int id, [FromBody] double price)
         {
             return await productService.TryChangePrice(id, price);
         }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        [Authorize(Roles = Role.Admin)]
+		public async Task<bool> Delete(int id)
         {
             return await productService.TryDeleteAsync(id);
         }

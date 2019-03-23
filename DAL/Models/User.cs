@@ -27,5 +27,8 @@ namespace DAL.Models
 			this.PasswordHash = passwordHash;
 			this.PasswordSalt = passwordSalt;
 		}
-    }
+		public void SetRole(string role) {
+			this.Role = role;
+		}
+	}
 }
