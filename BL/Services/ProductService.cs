@@ -16,14 +16,6 @@ namespace BL.Services
         {
         }
 
-        public async Task<bool> TryChangePrice(int id, double price)
-        {
-            var product = await this.GetOneAsync(id);
-            product.Price = price;
-            await context.SaveChangesAsync();
-            return true;
-        }
-
         public override async Task<ProductDTO> PostAsync(ProductDTO entity)
         {
             var resEntity = context != null ?
@@ -74,6 +66,16 @@ namespace BL.Services
                 .Include(p => p.Options)
                 .FirstAsync(p => p.Id == identifier))) :
                 null;
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetBySearchResult(string search, int page, int pageSize = 10) {
+	        return mapper.Map<IEnumerable<ProductDTO>>(await context.Set<Product>()
+		        .Where(p => (p.Producer.Name + " " + p.Model).Contains(search))
+		        .Skip((page - 1) * pageSize).Take(pageSize)
+				.Include(p => p.Category)
+		        .Include(p => p.Producer)
+		        .ToListAsync());
+
         }
     }
 }

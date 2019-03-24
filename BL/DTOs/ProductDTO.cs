@@ -16,5 +16,6 @@ namespace BL.DTOs
         public IEnumerable<OptionDTO> Options { get; set; }
         public double PriceWithDiscount { get; set; }
         public double Discount { get; set; }
+        public string FullName => this.ProducerName + " " + this.Model;
     }
 }

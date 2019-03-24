@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BL.DTOs;
 using BL.Services;
@@ -10,7 +11,7 @@ namespace WebStore_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User, Admin")]
+    [Authorize]
 	public class ProductsController : ControllerBase
     {
         ProductService productService;
@@ -19,15 +20,14 @@ namespace WebStore_API.Controllers
             this.productService = productService;
         }
 
-        //api/Products
-        [HttpGet]
-        public async Task<IEnumerable<ProductDTO>> Get()
-        {
-            return await productService.GetAllAsync();
+		//api/Products?page=p&search=s
+		[HttpGet]
+        public async Task<IEnumerable<ProductDTO>> GetBySearch(string search = "", int page = 1) {
+	        return await productService.GetBySearchResult(search, page);
         }
 
-        // GET: api/Products/5
-        [HttpGet("{id}")]
+		// GET: api/Products/5
+		[HttpGet("{id}")]
         public async Task<ProductDTO> Get(int id)
         {
             return await productService.GetOneAsync(id);
@@ -52,10 +52,9 @@ namespace WebStore_API.Controllers
         // PUT: api/Products/5
         [HttpPut("{id}")]
         [Authorize(Roles = Role.Admin)]
-		public async Task<bool> Put(int id, [FromBody] double price)
-        {
-            return await productService.TryChangePrice(id, price);
-        }
+		public async Task<ProductDTO> Put([FromBody] ProductDTO product) {
+			return await productService.UpdateAsync(product);
+		}
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
