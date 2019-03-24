@@ -22,13 +22,15 @@ namespace WebStore_API.Controllers
 
 		//api/Products?page=p&search=s
 		[HttpGet]
+		[AllowAnonymous]
         public async Task<IEnumerable<ProductDTO>> GetBySearch(string search = "", int page = 1) {
 	        return await productService.GetBySearchResult(search, page);
         }
 
 		// GET: api/Products/5
 		[HttpGet("{id}")]
-        public async Task<ProductDTO> Get(int id)
+		[AllowAnonymous]
+		public async Task<ProductDTO> Get(int id)
         {
             return await productService.GetOneAsync(id);
         }

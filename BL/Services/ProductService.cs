@@ -75,7 +75,6 @@ namespace BL.Services
 				.Include(p => p.Category)
 		        .Include(p => p.Producer)
 		        .ToListAsync());
-
         }
     }
 }
