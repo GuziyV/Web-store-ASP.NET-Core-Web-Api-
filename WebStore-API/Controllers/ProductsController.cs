@@ -42,14 +42,6 @@ namespace WebStore_API.Controllers
         }
 
         // PUT: api/Products/5
-        [HttpPost("{id}")]
-        [Authorize(Roles = Role.Admin)]
-		public async Task<bool> SetOption(int id, [FromBody] IEnumerable<OptionDTO> options)
-        {
-            return await productService.TrySetOptions(id, options);
-        }
-
-        // PUT: api/Products/5
         [HttpPut("{id}")]
         [Authorize(Roles = Role.Admin)]
 		public async Task<ProductDTO> Put([FromBody] ProductDTO product) {

@@ -38,7 +38,8 @@ namespace WebStore_API
 			services.AddCors();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
-            services.AddScoped<DbContext, StoreContext>();
+            services.AddScoped<CategoryService>();
+			services.AddScoped<DbContext, StoreContext>();
             services.AddScoped<StoreContext>();
             services.AddScoped<IMapper>(sp => BL.Mapping.AutoMapper.GetDefaultMapper());
 
