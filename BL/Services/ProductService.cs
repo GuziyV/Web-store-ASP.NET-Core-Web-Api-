@@ -68,7 +68,8 @@ namespace BL.Services
                 null;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetBySearchResult(string search, int page, int pageSize = 10) {
+        public async Task<IEnumerable<ProductDTO>> GetBySearchResult(string search, int page, int pageSize = 6) {
+	        search = search ?? string.Empty;
 	        return mapper.Map<IEnumerable<ProductDTO>>(await context.Set<Product>()
 		        .Where(p => (p.Producer.Name + " " + p.Model).Contains(search))
 		        .Skip((page - 1) * pageSize).Take(pageSize)

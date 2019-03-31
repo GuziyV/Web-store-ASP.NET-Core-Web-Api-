@@ -4,10 +4,10 @@ using System.Text;
 
 namespace DAL.Contexts
 {
-    enum OrderStatus
-    {
+    public enum OrderStatus {
         Pending = 0,
         Declined = 1,
-        Payed = 2
+        Payed = 2,
+		Basket
     }
 }

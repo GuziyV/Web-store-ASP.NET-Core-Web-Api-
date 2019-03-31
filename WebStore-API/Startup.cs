@@ -40,6 +40,7 @@ namespace WebStore_API
             services.AddScoped<UserService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<ProducerService>();
+            services.AddScoped<OrderService>();
 			services.AddScoped<DbContext, StoreContext>();
             services.AddScoped<StoreContext>();
             services.AddScoped<IMapper>(sp => BL.Mapping.AutoMapper.GetDefaultMapper());

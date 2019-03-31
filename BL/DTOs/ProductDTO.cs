@@ -17,5 +17,6 @@ namespace BL.DTOs
         public double PriceWithDiscount { get; set; }
         public double Discount { get; set; }
         public string FullName => this.ProducerName + " " + this.Model;
-    }
+        public int NumberOfItemsInCart { get; set; }
+	}
 }

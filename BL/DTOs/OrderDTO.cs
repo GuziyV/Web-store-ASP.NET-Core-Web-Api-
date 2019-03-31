@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DAL.Contexts;
 
 namespace BL.DTOs
 {
@@ -10,6 +11,7 @@ namespace BL.DTOs
         public IEnumerable<ProductDTO> Products { get; set; }
         public string Comment { get; set; }
         public string PaymentType { get; set; }
+        public OrderStatus OrderStatus { get; set; }
 
         private OrderDTO() { }
     }
