@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BL.DTOs;
 using BL.Services;
 using DAL;
+using DAL.Contexts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +21,11 @@ namespace WebStore_API.Controllers {
 		    this.orderService = orderService;
 	    }
 	    //api/order/5
-	    [HttpGet("{id}")]
-	    public async Task<IEnumerable<OrderDTO>> GetAllForUser(int id) {
-			if(id.ToString() != (this.User.Identity as ClaimsIdentity).FindFirst(ClaimTypes.Name)?.Value) {
-				return (await orderService.GetAllAsync()).Where(o => o.User.Id == id);
+	    [HttpGet("{userId}")]
+	    public async Task<List<OrderDTO>> GetAllForUser(int userId) {
+			if(userId.ToString() == (this.User.Identity as ClaimsIdentity).FindFirst(ClaimTypes.Name)?.Value) {
+				var orders = (await orderService.GetAllAsync(userId));
+				return orders.ToList();
 			}
 			else {
 				throw new Exception("You have no access to this data");
@@ -34,6 +36,12 @@ namespace WebStore_API.Controllers {
 	    [HttpPost]
 	    public async Task<OrderDTO> CreateOrder([FromBody] OrderDTO order) {
 		    return await orderService.PostAsync(order);
+	    }
+
+	    [HttpPost("{userId}")]
+	    public async Task<OrderDTO> TransferItemsFromCartToOrder(int userId) {
+		    var order =  await orderService.TransferItemsFromCartToOrder(userId);
+		    return order;
 	    }
 	}
 }

@@ -29,7 +29,7 @@ namespace WebStore_API.Controllers
 	    [HttpGet("{id}")]
 	    public async Task<OrderDTO> GetCartForUser(int id) {
 		    if (id.ToString() == (this.User.Identity as ClaimsIdentity).FindFirst(ClaimTypes.Name)?.Value) {
-			    return (await orderService.GetAllAsync()).FirstOrDefault(o => o.User.Id == id && o.OrderStatus == OrderStatus.Basket);
+			    return await orderService.GetCart(id);
 		    } else {
 			    throw new Exception("You have no access to this data");
 		    }
