@@ -18,6 +18,8 @@ namespace BL.Services {
 		public async Task<List<OrderDTO>> GetAllAsync(int userId) {
 			return context != null ?
 				mapper.Map<List<OrderDTO>>(await context.Set<Order>()
+					.Include(o => o.ProductOrders)
+					.ThenInclude(p => p.Product)
 					.Where(o => o.User.Id == userId && o.OrderStatus != OrderStatus.Basket)
 					.ToListAsync()) :
 				null;
@@ -30,7 +32,14 @@ namespace BL.Services {
 				await context.AddAsync(cart);
 			}
 
-			return mapper.Map<OrderDTO>(await cart.AddProduct(mapper.Map<Product>(product), context));
+			await cart.AddProduct(mapper.Map<Product>(product), context);
+			var basket = mapper.Map<OrderDTO>(await context.Set<Order>()
+				.Include(o => o.ProductOrders)
+				.ThenInclude(p => p.Product)
+				.Where(o => o.User.Id == user.Id && o.OrderStatus == OrderStatus.Basket)
+				.FirstOrDefaultAsync());
+			basket.User = null;
+			return basket;
 		}
 
 		private async Task<Order> getCart(int id) { // No DTO

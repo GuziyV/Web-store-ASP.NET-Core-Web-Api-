@@ -62,15 +62,15 @@ namespace BL.Mapping
 	                .ForMember(c => c.Products, c => c.MapFrom(cd => cd.ProductOrders.Select(po => po.Product)));
 
                 cfg.CreateMap<OrderDTO, Order>()
-                    .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
-                    .ForMember(c => c.Comment, c => c.MapFrom(cd => cd.Comment))
-                    .ForMember(c => c.User, c => c.MapFrom(cd => cd.User))
-                    .ForMember(c => c.PaymentType, c => c.MapFrom(cd => cd.PaymentType))
-                    .ForMember(c => c.Comment, c => c.MapFrom(cd => cd.Comment))
-                    .ForMember(c => c.OrderStatus, c => c.MapFrom(cd => cd.OrderStatus))
-					.ForMember(c => c.ProductOrders, c => c.Ignore());
+	                .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
+	                .ForMember(c => c.Comment, c => c.MapFrom(cd => cd.Comment))
+	                .ForMember(c => c.User, c => c.MapFrom(cd => cd.User))
+	                .ForMember(c => c.PaymentType, c => c.MapFrom(cd => cd.PaymentType))
+	                .ForMember(c => c.Comment, c => c.MapFrom(cd => cd.Comment))
+	                .ForMember(c => c.OrderStatus, c => c.MapFrom(cd => cd.OrderStatus))
+	                .ForMember(c => c.ProductOrders, c => c.Ignore());
 
-                cfg.CreateMap<Producer, ProducerDTO>()
+				cfg.CreateMap<Producer, ProducerDTO>()
                     .ForMember(c => c.Id, c => c.MapFrom(cd => cd.Id))
                     .ForMember(c => c.Products, c => c.MapFrom(cd => cd.Products))
                     .ForMember(c => c.Name, c => c.MapFrom(cd => cd.Name))
